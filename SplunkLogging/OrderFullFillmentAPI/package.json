@@ -1,0 +1,22 @@
+{
+  "name": "OrderFullFillmentFlow",
+  "version": "1.0.0",
+  "description": "Kumologica flow",
+  "main": "lambda.js",
+  "files": [
+    "lambda.js",
+    "OrderFullFillmentFlow.json",
+    "node_modules/**/*"
+  ],
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kumologica/kumologica-contrib-splunk": "0.0.2",
+    "@kumologica/runtime": "^0.9"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.513.0"
+  }
+}

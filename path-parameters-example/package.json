@@ -1,0 +1,23 @@
+{
+    "name": "path-parameters-example",
+    "version": "1.0.0",
+    "description": "Kumologica flow",
+    "main": "lambda.js",
+    "files": [
+      "lambda.js",
+      "path-parameters-example-flow.json",
+      "node_modules/**/*"
+    ],
+    "scripts": {
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@kumologica/runtime": "^2.1"
+    },
+    "devDependencies": {
+      "aws-sdk": "^2.513.0"
+    }
+  }
+  

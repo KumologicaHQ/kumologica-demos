@@ -1,0 +1,329 @@
+[
+    {
+        "id": "main.flow",
+        "type": "tab",
+        "label": "main",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "test.flow",
+        "type": "tab",
+        "label": "test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "eacbb9ef.69d5c8",
+        "type": "EventListener",
+        "z": "main.flow",
+        "name": "GET /service /:a/:b/:c",
+        "provider": "aws",
+        "eventSource": "api",
+        "dynamodbOperation": "",
+        "apiMethod": "get",
+        "apiUrl": "/service/:a/:b/:c",
+        "albMethod": "any",
+        "albUrl": "",
+        "bucketName": "",
+        "event": "",
+        "kapiUrl": "",
+        "kcronexpression": "",
+        "kObjectStoreName": "",
+        "zapiUrl": "",
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "f4811e65.85a78"
+            ]
+        ],
+        "caname": "event-handler",
+        "category": "general"
+    },
+    {
+        "id": "b5fc6ccd.17dd7",
+        "type": "EventListener-End",
+        "z": "main.flow",
+        "name": "Success",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "payload": "msg.payload",
+        "x": 462.5,
+        "y": 160,
+        "wires": [],
+        "caname": "eventlistenerend",
+        "category": "general"
+    },
+    {
+        "id": "b970b7d2.5454c8",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response parameter a",
+        "selector": "jsonBody",
+        "property": "a",
+        "comparison": "equals",
+        "value": "aa",
+        "x": 302.5,
+        "y": 140,
+        "wires": [
+            [
+                "e7210e2d.3ad11"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    },
+    {
+        "id": "6fc16e50.abc9f",
+        "type": "EventListener",
+        "z": "main.flow",
+        "name": "GET /service /:a/:b",
+        "provider": "aws",
+        "eventSource": "api",
+        "dynamodbOperation": "",
+        "apiMethod": "get",
+        "apiUrl": "/service/:a/:b",
+        "albMethod": "any",
+        "albUrl": "",
+        "bucketName": "",
+        "event": "",
+        "kapiUrl": "",
+        "kcronexpression": "",
+        "kObjectStoreName": "",
+        "zapiUrl": "",
+        "x": 122.5,
+        "y": 300,
+        "wires": [
+            [
+                "126859a6.235d36"
+            ]
+        ],
+        "caname": "event-handler",
+        "category": "general"
+    },
+    {
+        "id": "7979a121.b86ed",
+        "type": "EventListener-End",
+        "z": "main.flow",
+        "name": "Success",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "payload": "msg.payload",
+        "x": 462.5,
+        "y": 300,
+        "wires": [],
+        "caname": "eventlistenerend",
+        "category": "general"
+    },
+    {
+        "id": "a46e7af7.365288",
+        "type": "TestCaseEnd",
+        "z": "test.flow",
+        "name": "TestCaseEnd",
+        "x": 602.5,
+        "y": 320,
+        "wires": [],
+        "caname": "test-case-end",
+        "category": "testing"
+    },
+    {
+        "id": "e2d65c48.8c4df",
+        "type": "TestCase",
+        "z": "test.flow",
+        "name": "GET a-b-c",
+        "selectedTargetNode": "eacbb9ef.69d5c8",
+        "payload": "{\n  \"path\": \"/service/aa/bb/cc\",\n  \"headers\": {\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\",\n    \"Accept-Encoding\": \"gzip, deflate, lzma, sdch, br\",\n    \"Accept-Language\": \"en-US,en;q=0.8\",\n    \"CloudFront-Forwarded-Proto\": \"https\",\n    \"CloudFront-Is-Desktop-Viewer\": \"true\",\n    \"CloudFront-Is-Mobile-Viewer\": \"false\",\n    \"CloudFront-Is-SmartTV-Viewer\": \"false\",\n    \"CloudFront-Is-Tablet-Viewer\": \"false\",\n    \"CloudFront-Viewer-Country\": \"US\",\n    \"Host\": \"wt6mne2s9k.execute-api.us-west-2.amazonaws.com\",\n    \"Upgrade-Insecure-Requests\": \"1\",\n    \"User-Agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36 OPR/39.0.2256.48\",\n    \"Via\": \"1.1 fb7cca60f0ecd82ce07790c9c5eef16c.cloudfront.net (CloudFront)\",\n    \"X-Amz-Cf-Id\": \"nBsWBOrSHMgnaROZJK1wGCZ9PcRcSpq_oSXZNQwQ10OTZL4cimZo3g==\",\n    \"X-Forwarded-For\": \"192.168.100.1, 192.168.1.1\",\n    \"X-Forwarded-Port\": \"443\",\n    \"X-Forwarded-Proto\": \"https\"\n  },\n  \"pathParameters\": {\n    \"a\": \"aa\",\n    \"b\": \"bb\",\n    \"c\": \"cc\"\n  },\n  \"requestContext\": {\n    \"accountId\": \"123456789012\",\n    \"resourceId\": \"us4z18\",\n    \"stage\": \"test\",\n    \"requestId\": \"41b45ea3-70b5-11e6-b7bd-69b5aaebc7d9\",\n    \"identity\": {\n      \"cognitoIdentityPoolId\": \"\",\n      \"accountId\": \"\",\n      \"cognitoIdentityId\": \"\",\n      \"caller\": \"\",\n      \"apiKey\": \"\",\n      \"sourceIp\": \"192.168.100.1\",\n      \"cognitoAuthenticationType\": \"\",\n      \"cognitoAuthenticationProvider\": \"\",\n      \"userArn\": \"\",\n      \"userAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36 OPR/39.0.2256.48\",\n      \"user\": \"\"\n    },\n    \"resourcePath\": \"/{proxy+}\",\n    \"httpMethod\": \"GET\",\n    \"apiId\": \"wt6mne2s9k\"\n  },\n  \"resource\": \"/{proxy+}\",\n  \"httpMethod\": \"GET\",\n  \"queryStringParameters\": {\n    \"name\": \"me\"\n  },\n  \"stageVariables\": {\n    \"stageVarName\": \"stageVarValue\"\n  }\n}",
+        "initialLoad": "false",
+        "x": 102.5,
+        "y": 140,
+        "wires": [
+            [
+                "7dc57ff7.8e743"
+            ]
+        ],
+        "caname": "test-case",
+        "category": "testing"
+    },
+    {
+        "id": "f7b19136.93add",
+        "type": "TestCaseEnd",
+        "z": "test.flow",
+        "name": "TestCaseEnd",
+        "x": 602.5,
+        "y": 140,
+        "wires": [],
+        "caname": "test-case-end",
+        "category": "testing"
+    },
+    {
+        "id": "f4811e65.85a78",
+        "type": "Function",
+        "z": "main.flow",
+        "name": "set response",
+        "noerr": 0,
+        "query": "// Available objects in the context: msg, vars, env\n// Logging: node.log|info|warn|debug|error(\"message\")\n// Errors:  throw new Error('message') \n\nmsg.payload = {\n   \"service\": \"a-b-c\",\n   \"a\": msg.header.event.Records[0].pathParameters.a,\n   \"b\": msg.header.event.Records[0].pathParameters.b,\n   \"c\": msg.header.event.Records[0].pathParameters.c\n};\n\nreturn msg;\n",
+        "x": 282.5,
+        "y": 160,
+        "wires": [
+            [
+                "b5fc6ccd.17dd7"
+            ]
+        ],
+        "caname": "function",
+        "category": "transformation"
+    },
+    {
+        "id": "e7210e2d.3ad11",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response parameter b",
+        "selector": "jsonBody",
+        "property": "b",
+        "comparison": "equals",
+        "value": "bb",
+        "x": 402.5,
+        "y": 140,
+        "wires": [
+            [
+                "a6d9080a.96bf38"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    },
+    {
+        "id": "a6d9080a.96bf38",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response parameter c",
+        "selector": "jsonBody",
+        "property": "c",
+        "comparison": "equals",
+        "value": "cc",
+        "x": 502.5,
+        "y": 140,
+        "wires": [
+            [
+                "f7b19136.93add"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    },
+    {
+        "id": "258eb20e.4c951e",
+        "type": "TestCase",
+        "z": "test.flow",
+        "name": "GET a-b",
+        "selectedTargetNode": "6fc16e50.abc9f",
+        "payload": "{\n  \"path\": \"/service/aa/bb\",\n  \"headers\": {\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\",\n    \"Accept-Encoding\": \"gzip, deflate, lzma, sdch, br\",\n    \"Accept-Language\": \"en-US,en;q=0.8\",\n    \"CloudFront-Forwarded-Proto\": \"https\",\n    \"CloudFront-Is-Desktop-Viewer\": \"true\",\n    \"CloudFront-Is-Mobile-Viewer\": \"false\",\n    \"CloudFront-Is-SmartTV-Viewer\": \"false\",\n    \"CloudFront-Is-Tablet-Viewer\": \"false\",\n    \"CloudFront-Viewer-Country\": \"US\",\n    \"Host\": \"wt6mne2s9k.execute-api.us-west-2.amazonaws.com\",\n    \"Upgrade-Insecure-Requests\": \"1\",\n    \"User-Agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36 OPR/39.0.2256.48\",\n    \"Via\": \"1.1 fb7cca60f0ecd82ce07790c9c5eef16c.cloudfront.net (CloudFront)\",\n    \"X-Amz-Cf-Id\": \"nBsWBOrSHMgnaROZJK1wGCZ9PcRcSpq_oSXZNQwQ10OTZL4cimZo3g==\",\n    \"X-Forwarded-For\": \"192.168.100.1, 192.168.1.1\",\n    \"X-Forwarded-Port\": \"443\",\n    \"X-Forwarded-Proto\": \"https\"\n  },\n  \"pathParameters\": {\n    \"a\": \"aa\",\n    \"b\": \"bb\"\n  },\n  \"requestContext\": {\n    \"accountId\": \"123456789012\",\n    \"resourceId\": \"us4z18\",\n    \"stage\": \"test\",\n    \"requestId\": \"41b45ea3-70b5-11e6-b7bd-69b5aaebc7d9\",\n    \"identity\": {\n      \"cognitoIdentityPoolId\": \"\",\n      \"accountId\": \"\",\n      \"cognitoIdentityId\": \"\",\n      \"caller\": \"\",\n      \"apiKey\": \"\",\n      \"sourceIp\": \"192.168.100.1\",\n      \"cognitoAuthenticationType\": \"\",\n      \"cognitoAuthenticationProvider\": \"\",\n      \"userArn\": \"\",\n      \"userAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36 OPR/39.0.2256.48\",\n      \"user\": \"\"\n    },\n    \"resourcePath\": \"/{proxy+}\",\n    \"httpMethod\": \"GET\",\n    \"apiId\": \"wt6mne2s9k\"\n  },\n  \"resource\": \"/{proxy+}\",\n  \"httpMethod\": \"GET\",\n  \"queryStringParameters\": {\n    \"name\": \"me\"\n  },\n  \"stageVariables\": {\n    \"stageVarName\": \"stageVarValue\"\n  }\n}",
+        "initialLoad": "false",
+        "x": 102.5,
+        "y": 320,
+        "wires": [
+            [
+                "c61069c6.788998"
+            ]
+        ],
+        "caname": "test-case",
+        "category": "testing"
+    },
+    {
+        "id": "126859a6.235d36",
+        "type": "Function",
+        "z": "main.flow",
+        "name": "set response",
+        "noerr": 0,
+        "query": "// Available objects in the context: msg, vars, env\n// Logging: node.log|info|warn|debug|error(\"message\")\n// Errors:  throw new Error('message') \n\n\nmsg.payload = {\n   \"service\": \"a-b\",\n   \"a\": msg.header.event.Records[0].pathParameters.a,\n   \"b\": msg.header.event.Records[0].pathParameters.b\n};\n\nreturn msg;\n",
+        "x": 282.5,
+        "y": 300,
+        "wires": [
+            [
+                "7979a121.b86ed"
+            ]
+        ],
+        "caname": "function",
+        "category": "transformation"
+    },
+    {
+        "id": "7dc57ff7.8e743",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response service",
+        "selector": "jsonBody",
+        "property": "service",
+        "comparison": "equals",
+        "value": "a-b-c",
+        "x": 202.5,
+        "y": 140,
+        "wires": [
+            [
+                "b970b7d2.5454c8"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    },
+    {
+        "id": "5c855e6e.99f17",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response parameter a",
+        "selector": "jsonBody",
+        "property": "a",
+        "comparison": "equals",
+        "value": "aa",
+        "x": 302.5,
+        "y": 320,
+        "wires": [
+            [
+                "798a6832.9b0b68"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    },
+    {
+        "id": "798a6832.9b0b68",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response parameter b",
+        "selector": "jsonBody",
+        "property": "b",
+        "comparison": "equals",
+        "value": "bb",
+        "x": 402.5,
+        "y": 320,
+        "wires": [
+            [
+                "a46e7af7.365288"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    },
+    {
+        "id": "c61069c6.788998",
+        "type": "Assertion",
+        "z": "test.flow",
+        "name": "check response service",
+        "selector": "jsonBody",
+        "property": "service",
+        "comparison": "equals",
+        "value": "a-b",
+        "x": 202.5,
+        "y": 320,
+        "wires": [
+            [
+                "5c855e6e.99f17"
+            ]
+        ],
+        "caname": "test-assertion",
+        "category": "testing"
+    }
+]

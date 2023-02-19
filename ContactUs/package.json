@@ -1,0 +1,23 @@
+{
+    "name": "ContactUs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "lambda.js",
+    "files": [
+      "lambda.js",
+      "ContactUs-flow.json",
+      "node_modules/**/*"
+    ],
+    "scripts": {
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@kumologica/runtime": "latest"
+    },
+    "devDependencies": {
+      "aws-sdk": "^2.513.0"
+    }
+  }
+  

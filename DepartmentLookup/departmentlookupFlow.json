@@ -1,0 +1,159 @@
+[
+    {
+        "id": "main.flow",
+        "type": "tab",
+        "label": "main",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "eacbb9ef.69d5c8",
+        "type": "EventListener",
+        "z": "main.flow",
+        "name": "GET /department",
+        "provider": "aws",
+        "eventSource": "api",
+        "dynamodbOperation": "",
+        "apiMethod": "get",
+        "apiUrl": "/department",
+        "albMethod": "any",
+        "albUrl": "",
+        "bucketName": "",
+        "event": "",
+        "reference": "",
+        "queueName": "",
+        "topicName": "",
+        "kapiUrl": "",
+        "kcronexpression": "",
+        "kreference": "",
+        "kObjectStoreName": "",
+        "zapiUrl": "",
+        "x": 142.5,
+        "y": 120,
+        "wires": [
+            [
+                "6322331e.d5e6cc"
+            ]
+        ],
+        "caname": "event-handler",
+        "category": "general"
+    },
+    {
+        "id": "b5fc6ccd.17dd7",
+        "type": "EventListener-End",
+        "z": "main.flow",
+        "name": "Success",
+        "statusCode": "200",
+        "responseType": "http",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "payload": "msg.payload",
+        "eventPayload": "",
+        "eventType": "success",
+        "x": 702.5,
+        "y": 120,
+        "wires": [],
+        "caname": "eventlistenerend",
+        "category": "general"
+    },
+    {
+        "id": "6322331e.d5e6cc",
+        "type": "Set-Property",
+        "z": "main.flow",
+        "name": "Set-Property",
+        "rules": [
+            {
+                "t": "set",
+                "p": "departmentcode",
+                "pt": "camsg",
+                "to": "header.event.Records[0].queryStringParameters.code",
+                "tot": "camsg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 242.5,
+        "y": 120,
+        "wires": [
+            [
+                "746323c1.3b045c"
+            ]
+        ],
+        "caname": "setproperty",
+        "category": "transformation"
+    },
+    {
+        "id": "746323c1.3b045c",
+        "type": "S3",
+        "z": "main.flow",
+        "operation": "GetObject",
+        "Bucket": "kumoexcelstores",
+        "Key": "department.xlsx",
+        "KeyType": "",
+        "Content": "",
+        "ContentType": "",
+        "BucketType": "",
+        "CopySource": "",
+        "CopySourceType": "",
+        "DestinationBucket": "",
+        "DestinationBucketType": "",
+        "DestinationKey": "",
+        "DestinationKeyType": "",
+        "Delete": "",
+        "DeleteType": "",
+        "AccessKey": "",
+        "AccessSecret": "",
+        "Rolearn": "",
+        "Region": "ap-southeast-2",
+        "SecurityType": "Credentials",
+        "ReqTimeout": "10000",
+        "name": "S3",
+        "x": 362.5,
+        "y": 120,
+        "wires": [
+            [
+                "af77654f.de7b88"
+            ]
+        ],
+        "caname": "S3",
+        "category": "aws"
+    },
+    {
+        "id": "af77654f.de7b88",
+        "type": "Excel",
+        "z": "main.flow",
+        "name": "Excel",
+        "operation": "read",
+        "content": "msg.payload.Body",
+        "x": 462.5,
+        "y": 120,
+        "wires": [
+            [
+                "3420a48a.7860ec"
+            ]
+        ],
+        "caname": "Excel",
+        "category": "Transformation"
+    },
+    {
+        "id": "3420a48a.7860ec",
+        "type": "Datamapper",
+        "z": "main.flow",
+        "name": "Datamapper",
+        "datamappertype": "$filter($filter(msg.payload, function($v,$i,$a){\n  $v.sheet = 'Departments'\n}).content,function($v,$i,$a){\n    $v.Code=$number($$.msg.departmentcode)\n}).Department",
+        "testdataeditortype": "{\n    \"payload\": \"hello world\"\n}",
+        "x": 582.5,
+        "y": 120,
+        "wires": [
+            [
+                "b5fc6ccd.17dd7"
+            ]
+        ],
+        "caname": "datamapper",
+        "category": "transformation"
+    }
+]

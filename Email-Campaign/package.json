@@ -1,0 +1,21 @@
+{
+  "name": "Email-campaign",
+  "version": "1.0.0",
+  "description": "Kumologica flow",
+  "main": "lambda.js",
+  "files": [
+    "lambda.js",
+    "Email-campaign-flow.json",
+    "node_modules/**/*"
+  ],
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kumologica/runtime": "0.4.67"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.513.0"
+  }
+}

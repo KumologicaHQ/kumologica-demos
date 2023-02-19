@@ -1,0 +1,67 @@
+<!-- Original bootsnipp https://bootsnipp.com/snippets/83Br -->
+<html>
+    <head>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <style>
+            body {padding-top:20px;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="well well-sm">
+                 <!-- Replace value of action with the url of API that has been displayed in Kumologica Designer console -->
+                <form class="form-horizontal" 
+                      action="https://YOURAPIID.execute-api.YOURREGION.amazonaws.com/test/issue" 
+                      method="post">
+                <fieldset>
+                    <legend class="text-center">Contact Us</legend>
+            
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="name">Summary</label>
+                        <div class="col-md-9">
+                            <input id="name" name="name" type="text" placeholder="Your name" class="form-control">
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                        <div class="col-md-9">
+                            <input id="email" name="email" type="text" placeholder="Your email" class="form-control">
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="issueType">Issue Type</label>
+                        <div class="col-md-9">
+                        <select class="form-control" id="issueType" name="issueType">
+                            <option>Task</option>
+                            <option>Ask a question</option>
+                            <option>Submit a request or incident</option>
+                        </select>
+                        </div>
+                      </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="message">Your message</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>

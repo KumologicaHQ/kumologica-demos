@@ -1,0 +1,25 @@
+{
+  "name": "puppeterr-lab",
+  "version": "1.0.0",
+  "description": "Kumologica flow",
+  "main": "lambda.js",
+  "files": [
+    "lambda.js",
+    "puppeterr-lab-flow.json",
+    "node_modules/**/*"
+  ],
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kumologica/kumologica-contrib-base64": "file:../../../kumo-base64/kumologica-contrib-base64",
+    "@kumologica/kumologica-contrib-jwtverifier": "file:../../../kumo-jwtverifier/kumologica-contib-jwtverifier",
+    "@kumologica/kumologica-contrib-puppeteer": "0.0.17",
+    "@kumologica/runtime": "0.4.60-alpha"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.513.0",
+    "puppeteer": "^2.1.1"
+  }
+}

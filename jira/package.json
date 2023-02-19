@@ -1,0 +1,22 @@
+{
+  "name": "jira-demo",
+  "version": "1.0.0",
+  "description": "Kumologica flow",
+  "main": "lambda.js",
+  "files": [
+    "lambda.js",
+    "jira-demo-flow.json",
+    "node_modules/**/*"
+  ],
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kumologica/kumologica-contrib-jira": "^0.1",
+    "@kumologica/runtime": "^0.9"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.513.0"
+  }
+}
