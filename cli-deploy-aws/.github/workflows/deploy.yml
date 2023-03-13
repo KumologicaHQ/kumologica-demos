@@ -1,0 +1,80 @@
+name: |
+  Example github action workflow demonstrating deployment
+  of Kumologica flow to the aws account
+on:
+  push:
+    branches:
+      - main
+env:
+  AWS_REGION: CHANGE_IT_TO_YOUR_REGION
+  LAMBDA_NAME: cli-demo-lambda
+  BUCKET_NAME: CHANGE_IT_TO_REAL_BUCKET_NAME
+  KL_ENVIRONMENT: '{"Variables": {"key": "value"}}'
+  KL_TRIGGERS: '[{"api": {"apiId": "CHANGE_IT_TO_API_GATEWAY_ID", "parentId": "CHANGE_IT_TO_PARENT_ID", "stage": "test", "resource": "accounts"}},  {"event": {"expression": "cron(0 1 * * ? *)", "reference": "1am", "name": "CliBuildDemoEvent1am"}}, {"event": {"expression": "rate(1 minute)", "reference": "5min", "name": "CliBuildDemoEvent5min"}}]'
+
+jobs:
+  deploy:
+    name: Deploy kumologica flow
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    # checkout repository
+    - name: checkout sources
+      uses: actions/checkout@v2
+
+    # setup aws credentials
+    - uses: actions/checkout@v2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:        
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
+        aws-region:  ${{ env.AWS_REGION }}
+
+    # setup right node version
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    # install kumologica cli
+    - name: Install kumologica cli
+      run: |
+        npm install -g @kumologica/sdk --ignore-scripts  
+
+    # build kumologica flow
+    - name: build kumologica flow lambda
+      run: kl build aws
+
+    # generate cloudformation script
+    # note we pass environment variables so iam role will
+    # contain valid resources
+    - name: generate cloudformation script
+      run: |
+        kl export cloudformation --project-directory . \
+           --environment '${{ env.KL_ENVIRONMENT }}' \
+           --zip-file-name lambda.zip \
+           --lambda-name ${{ env.LAMBDA_NAME }} \
+           --bucket-name ${{ env.BUCKET_NAME }} \
+           --triggers '${{ env.KL_TRIGGERS }}'
+
+    # cloud formation package
+    - name: cf package
+      run: |
+        aws cloudformation package \
+          --template-file ./build/template.json \
+          --s3-bucket ${{ env.BUCKET_NAME }} \
+          --s3-prefix ${{ env.LAMBDA_NAME }} \
+          --output-template-file template.yml
+          
+    # cloudformation deploy
+    - name: Deploy CloudFormation Stack
+      uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3        
+      with:
+        name: ${{ env.LAMBDA_NAME }}
+        template: template.yml
+        capabilities: CAPABILITY_NAMED_IAM, CAPABILITY_AUTO_EXPAND
+        no-fail-on-empty-changeset: "1"      
