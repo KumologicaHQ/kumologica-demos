@@ -1,0 +1,333 @@
+[
+    {
+        "id": "main.flow",
+        "type": "tab",
+        "label": "main",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "test.flow",
+        "type": "tab",
+        "label": "test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "eacbb9ef.69d5c8",
+        "type": "EventListener",
+        "z": "main.flow",
+        "name": "POST /initialise",
+        "provider": "aws",
+        "eventSource": "api",
+        "dynamodbOperation": "",
+        "apiMethod": "post",
+        "apiUrl": "/initialise",
+        "albMethod": "any",
+        "albUrl": "",
+        "bucketName": "",
+        "event": "",
+        "reference": "",
+        "queueName": "",
+        "topicName": "",
+        "partnerDetailType": "",
+        "websocketCustom": "",
+        "s3BucketName": "",
+        "s3Prefix": "",
+        "s3Suffix": "",
+        "kapiUrl": "",
+        "kcronexpression": "",
+        "kreference": "",
+        "kObjectStoreName": "",
+        "zapiUrl": "",
+        "napiUrl": "",
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "3c7b656e.e8fa8a"
+            ]
+        ],
+        "caname": "event-handler",
+        "category": "general"
+    },
+    {
+        "id": "b5fc6ccd.17dd7",
+        "type": "EventListener-End",
+        "z": "main.flow",
+        "name": "Success",
+        "statusCode": "200",
+        "responseType": "http",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "payload": "",
+        "eventPayload": "",
+        "eventType": "success",
+        "x": 522.5,
+        "y": 160,
+        "wires": [],
+        "caname": "eventlistenerend",
+        "category": "general"
+    },
+    {
+        "id": "9b2e21b8.5a679",
+        "type": "EventListener",
+        "z": "main.flow",
+        "name": "POST /query",
+        "provider": "aws",
+        "eventSource": "api",
+        "dynamodbOperation": "",
+        "apiMethod": "post",
+        "apiUrl": "/query",
+        "albMethod": "any",
+        "albUrl": "",
+        "bucketName": "",
+        "event": "",
+        "reference": "",
+        "queueName": "",
+        "topicName": "",
+        "partnerDetailType": "",
+        "websocketCustom": "",
+        "s3BucketName": "",
+        "s3Prefix": "",
+        "s3Suffix": "",
+        "kapiUrl": "",
+        "kcronexpression": "",
+        "kreference": "",
+        "kObjectStoreName": "",
+        "zapiUrl": "",
+        "napiUrl": "",
+        "x": 122.5,
+        "y": 300,
+        "wires": [
+            [
+                "11b02861.e55808"
+            ]
+        ],
+        "caname": "event-handler",
+        "category": "general"
+    },
+    {
+        "id": "9c9f3808.efa278",
+        "type": "EventListener-End",
+        "z": "main.flow",
+        "name": "Success",
+        "statusCode": "200",
+        "responseType": "http",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "payload": "msg.payload",
+        "eventPayload": "",
+        "eventType": "success",
+        "x": 622.5,
+        "y": 300,
+        "wires": [],
+        "caname": "eventlistenerend",
+        "category": "general"
+    },
+    {
+        "id": "c69f0b02.e4bcb8",
+        "type": "VectorStore",
+        "z": "main.flow",
+        "name": "Search Vector Store",
+        "operation": "Query",
+        "splitter": "CharacterTextSplitter",
+        "chunkSize": "",
+        "chunkOverlap": "",
+        "separator": "",
+        "separators": "",
+        "embeddings": "text-embedding-3-large",
+        "encodingFormat": "",
+        "document": "docsecond line",
+        "documentMetadata": "{      \"url\": msg.url}",
+        "documentLang": "",
+        "dimensions": "",
+        "openAIApiKey": "",
+        "voyageAIApiKey": "",
+        "query": "msg.query",
+        "fakeSize": "",
+        "searchType": "similarity",
+        "retrieveQuery": "msg.query",
+        "retrieveK": "4",
+        "fetchK": "4",
+        "lambda": "0.5",
+        "x": 362.5,
+        "y": 300,
+        "wires": [
+            [
+                "3a2d8176.a8c6ee"
+            ]
+        ],
+        "caname": "VectorStore",
+        "category": "AI"
+    },
+    {
+        "id": "3a2d8176.a8c6ee",
+        "type": "Function",
+        "z": "main.flow",
+        "name": "Setup Prompt",
+        "noerr": 0,
+        "query": "// msg.payload contains response from vector store\nconst res = msg.payload.map(doc => doc.pageContext).join(\"\\n\");\n\nmsg.system = `\nYou are an AI assistant tasked with answering questions using the following documents:\n\"${res}\"\nNow, based on the above documents, answer the following query:\n`;\n\nreturn msg;",
+        "x": 442.5,
+        "y": 300,
+        "wires": [
+            [
+                "bbd9d01a.f188f"
+            ]
+        ],
+        "caname": "function",
+        "category": "transformation"
+    },
+    {
+        "id": "bbd9d01a.f188f",
+        "type": "OpenAI",
+        "z": "main.flow",
+        "name": "Query OpenAI",
+        "operation": "SingleQAndA",
+        "caModel": "gpt-4",
+        "aiSystemContext": "msg.system",
+        "aiQuestion": "msg.query",
+        "apikey": "",
+        "x": 542.5,
+        "y": 300,
+        "wires": [
+            [
+                "9c9f3808.efa278"
+            ]
+        ],
+        "caname": "OpenAIAssistant",
+        "category": "AI"
+    },
+    {
+        "id": "e271db28.520cf8",
+        "type": "VectorStore",
+        "z": "main.flow",
+        "name": "Add Document",
+        "operation": "AddDocument",
+        "splitter": "RecursiveCharacterTextSplitter",
+        "chunkSize": "50",
+        "chunkOverlap": "5",
+        "separator": "",
+        "separators": "\"\\n\"",
+        "embeddings": "text-embedding-3-small",
+        "encodingFormat": "float",
+        "document": "msg.payload",
+        "documentMetadata": "{\"source\": \"local\"}",
+        "documentLang": "",
+        "dimensions": "",
+        "openAIApiKey": "",
+        "voyageAIApiKey": "",
+        "query": "",
+        "fakeSize": "",
+        "retrieveQuery": "",
+        "retrieveK": "",
+        "fetchK": "",
+        "lambda": "",
+        "x": 362.5,
+        "y": 140,
+        "wires": [
+            [
+                "df75e912.21a278"
+            ]
+        ],
+        "caname": "VectorStore",
+        "category": "AI"
+    },
+    {
+        "id": "3c7b656e.e8fa8a",
+        "type": "Function",
+        "z": "main.flow",
+        "name": "Setup Documents",
+        "noerr": 0,
+        "query": "msg.doc = [\n    \"grulp is an animal\",\n    \"grapl is a plant\",\n    \"grulp feeds on grapl\",\n    \"grulp is herbivore\",\n    \"grapl doesnt produce flowers\"\n    ];\n    \nreturn msg;",
+        "x": 202.5,
+        "y": 160,
+        "wires": [
+            [
+                "6a0e2b68.9fe614"
+            ]
+        ],
+        "caname": "function",
+        "category": "transformation"
+    },
+    {
+        "id": "6a0e2b68.9fe614",
+        "type": "ForEach",
+        "z": "main.flow",
+        "name": "ForEach Document",
+        "array": "msg.doc",
+        "x": 282.5,
+        "y": 160,
+        "wires": [
+            [
+                "e271db28.520cf8"
+            ]
+        ],
+        "caname": "foreach",
+        "category": "routing"
+    },
+    {
+        "id": "df75e912.21a278",
+        "type": "ForEachEnd",
+        "z": "main.flow",
+        "name": "ForEach Document End",
+        "x": 442.5,
+        "y": 160,
+        "wires": [
+            [
+                "b5fc6ccd.17dd7"
+            ]
+        ],
+        "caname": "foreach",
+        "category": "routing"
+    },
+    {
+        "id": "11b02861.e55808",
+        "type": "JSON",
+        "z": "main.flow",
+        "name": "JSON",
+        "property": "msg.payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 202.5,
+        "y": 300,
+        "wires": [
+            [
+                "6a39a047.e9aa6"
+            ]
+        ],
+        "caname": "JSON",
+        "category": "transformation"
+    },
+    {
+        "id": "6a39a047.e9aa6",
+        "type": "Set-Property",
+        "z": "main.flow",
+        "name": "Set Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "camsg",
+                "to": "payload.query",
+                "tot": "camsg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 282.5,
+        "y": 300,
+        "wires": [
+            [
+                "c69f0b02.e4bcb8"
+            ]
+        ],
+        "caname": "setproperty",
+        "category": "transformation"
+    }
+]

@@ -1,0 +1,33 @@
+{
+    "name": "rag-memoryvectorstore",
+    "version": "1.0.0",
+    "description": "Kumologica flow",
+    "main": "lambda.js",
+    "files": [
+        "lambda.js",
+        "rag-memoryvectorstore-flow.json",
+        "node_modules/**/*"
+    ],
+    "scripts": {},
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@kumologica/kumologica-contrib-openai": "^0.0.2",
+        "@kumologica/kumologica-contrib-vectorstore": "^0.0.1",
+        "@kumologica/runtime": "3.5.5"
+    },
+    "devDependencies": {
+        "@aws-sdk/client-cloudwatch-events": "^3.549.0",
+        "@aws-sdk/client-dynamodb": "^3.540.0",
+        "@aws-sdk/client-lambda": "^3.549.0",
+        "@aws-sdk/client-rekognition": "^3.549.0",
+        "@aws-sdk/client-s3": "^3.550.0",
+        "@aws-sdk/client-ses": "^3.549.0",
+        "@aws-sdk/client-sns": "^3.549.0",
+        "@aws-sdk/client-sqs": "^3.549.0",
+        "@aws-sdk/client-ssm": "^3.549.0",
+        "@aws-sdk/client-sts": "^3.540.0",
+        "@aws-sdk/lib-dynamodb": "^3.540.0"
+    }
+}
